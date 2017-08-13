@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView mListView;
     private EditText mSendText;
     private Button mSendButton;
+    private SeekBar mSeekBar;
 
     /**
      * String buffer for outgoing messages
@@ -96,17 +98,35 @@ public class MainActivity extends AppCompatActivity {
         }
 
         mListView = (ListView) findViewById(R.id.listView);
-        mSendText = (EditText) findViewById(R.id.sendText);
-        mSendButton = (Button) findViewById(R.id.sendButton);
+        //mSendText = (EditText) findViewById(R.id.sendText);
+        //mSendButton = (Button) findViewById(R.id.sendButton);
+        mSeekBar = (SeekBar) findViewById(R.id.seekBar);
 
+        mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                String message = String.valueOf(mSeekBar.getProgress());
+                sendMessage(message);
+            }
+        });
         // Initialize the send button with a listener that for click events
-        mSendButton.setOnClickListener(new View.OnClickListener() {
+/*        mSendButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Send a message using content of the edit text widget
                 String message = mSendText.getText().toString();
                 sendMessage(message);
             }
-        });
+        });*/
 
         // Initialize the buffer for outgoing messages
         mOutStringBuffer = new StringBuffer("");
@@ -583,18 +603,19 @@ public class MainActivity extends AppCompatActivity {
         // Check that there's actually something to send
         if (message.length() > 0) {
 
-
             int result = Integer.parseInt(message);
+
+            message += ";";
 
             // Get the message bytes and tell the BluetoothChatService to write
             //byte[] send = message.getBytes();
 
-            byte[] send = ByteBuffer.allocate(4).putInt(result).array();
+            byte[] send = message.getBytes(); // ByteBuffer.allocate(4).putInt(result).array();
             write(send);
 
             // Reset out string buffer to zero and clear the edit text field
             mOutStringBuffer.setLength(0);
-            mSendText.setText(mOutStringBuffer);
+            //mSendText.setText(mOutStringBuffer);
         }
     }
 

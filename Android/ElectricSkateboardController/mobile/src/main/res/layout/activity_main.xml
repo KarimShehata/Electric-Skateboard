@@ -28,7 +28,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <EditText
+            <SeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/seekBar" />
+
+            <!--<EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/sendText"
@@ -39,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/send_button_text"
-                android:id="@+id/sendButton" />
+                android:id="@+id/sendButton" />-->
         </LinearLayout>
 
     </LinearLayout>
