@@ -8,8 +8,8 @@ Servo servo;  // create servo object to control a servo
 
 String message = "";
 
-int minSpeed = 0;  //min speed
-int maxSpeed = 180; //max effective speed = 90
+int minSpeed = 5;  //min speed
+int maxSpeed = 40; //max effective speed = 90
 
 void setup()
 {
@@ -19,14 +19,13 @@ void setup()
 	BTSerial.begin(9600); // HC-06 current baud rate (default 115200)
 
 	servo.attach(14);  // attaches the servo on pin 14 = A0
-
-	servo.write(0); // arm esc
-	delay(3000);
+	
+	servo.write(0);
+	delay(500);
 }
 
 void loop()
 {
-
 	if (BTSerial.available())
 	{
 		char c = BTSerial.read();
