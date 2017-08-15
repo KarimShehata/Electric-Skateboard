@@ -10,11 +10,7 @@ float factor = r2 / (r1 + r2);
 float sum;
 int count;
 
-void setup() {
-	Serial.begin(9600);
-}
-
-void loop() {
+void readAverageVoltage() {
 
 	analog_value = analogRead(A1);
 	input_voltage = (analog_value * 5.0) / 1024.0;
