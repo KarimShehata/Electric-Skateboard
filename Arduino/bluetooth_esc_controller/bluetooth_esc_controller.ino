@@ -18,7 +18,7 @@ void setup()
 
 	BTSerial.begin(9600); // HC-06 current baud rate (default 115200)
 
-	servo.attach(14);  // attaches the servo on pin 9 to the servo object
+	servo.attach(14);  // attaches the servo on pin 14 = A0
 
 	servo.write(0); // arm esc
 	delay(3000);

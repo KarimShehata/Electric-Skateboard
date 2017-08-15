@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="bluetooth_esc_controller.ino" />
+    <None Include="VoltageDeviderTest.ino" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="__vm\.bluetooth_esc_controller.vsarduino.h">

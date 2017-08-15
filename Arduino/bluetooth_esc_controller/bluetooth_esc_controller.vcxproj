@@ -78,6 +78,9 @@
     <None Include="bluetooth_esc_controller.ino">
       <FileType>CppCode</FileType>
     </None>
+    <None Include="VoltageDeviderTest.ino">
+      <FileType>CppCode</FileType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="__vm\.bluetooth_esc_controller.vsarduino.h" />
