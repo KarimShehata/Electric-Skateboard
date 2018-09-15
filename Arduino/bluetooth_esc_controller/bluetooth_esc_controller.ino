@@ -11,20 +11,58 @@ String message = "";
 int minSpeed = 5;  //min speed
 int maxSpeed = 40; //max effective speed = 90
 
+int analog_value;
+float input_voltage;
+float battery_voltage;
+
+float r1 = 99.0;
+float r2 = 20.0;
+
+float factor = r2 / (r1 + r2);
+
+float sum;
+int count;
+
+unsigned long currentMillis;
+long previousTransmitMillis = 0;        // will store last time LED was updated
+long previousVoltageMeasureMillis = 0;        // will store last time LED was updated
+long previousMillis = 0;        // will store last time LED was updated
+long transmitInterval = 10000;           // interval at which to blink (milliseconds)
+long voltageMeasureInterval = 250;           // interval at which to blink (milliseconds)
+
+float voltage;
+
+void readVoltage() {
+
+	analog_value = analogRead(A1);
+	input_voltage = (analog_value * 5.0) / 1024.0;
+	battery_voltage = input_voltage / factor;
+
+	sum += battery_voltage;
+	count++;
+
+	if (count >= 100)
+	{
+		voltage = sum / 100.0;
+		count = 0;
+		sum = 0;
+	}
+}
+
 void setup()
 {
-	Serial.begin(9600);   //Sets the baud for serial data transmission                               
+	Serial.begin(9600);   //Sets the baud for serial data transmission
 	pinMode(13, OUTPUT);  //Sets digital pin 13 as output pin
 
 	BTSerial.begin(9600); // HC-06 current baud rate (default 115200)
 
 	servo.attach(14);  // attaches the servo on pin 14 = A0
-	
+
 	servo.write(0);
 	delay(500);
 }
 
-void loop()
+void receive()
 {
 	if (BTSerial.available())
 	{
@@ -47,4 +85,22 @@ void loop()
 			message += c;
 		}
 	}
+}
+
+void loop()
+{
+	receive();
+
+	currentMillis = millis();
+
+	if (currentMillis - previousVoltageMeasureMillis > voltageMeasureInterval) {
+		previousVoltageMeasureMillis = currentMillis;
+		readVoltage();
+	}
+
+	if (currentMillis - previousTransmitMillis > transmitInterval) {
+		previousTransmitMillis = currentMillis;
+		BTSerial.println("~" + String(voltage) + ";");
+	}
+
 }
