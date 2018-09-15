@@ -1,0 +1,7 @@
+{
+    "port": "COM5",
+    "board": "arduino:avr:diecimila",
+    "sketch": "bluetooth_esc_controller\\bluetooth_esc_controller.ino",
+    "output": "../ArduinoOutput",
+    "configuration": "cpu=atmega328"
+}
